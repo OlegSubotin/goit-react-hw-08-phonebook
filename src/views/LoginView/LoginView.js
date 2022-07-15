@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 // import { Notify } from 'notiflix';
 // import ClipLoader from 'react-spinner/ClipLoader';
+import authOperations from 'redux/auth/auth-operations';
 import s from './LoginView.module.css';
 
 const LoginView = () => {
+    const dispatch = useDispatch();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
@@ -21,8 +24,7 @@ const LoginView = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(email);
-        console.log(password);
+        dispatch(authOperations.logIn({ email, password }));
         reset();
     };
 

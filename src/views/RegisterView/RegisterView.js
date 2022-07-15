@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 // import { Notify } from 'notiflix';
 // import ClipLoader from 'react-spinner/ClipLoader';
+import authOperations from 'redux/auth/auth-operations';
 import s from './RegisterView.module.css';
 
 const RegisterView = () => {
+    const dispatch = useDispatch();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [user, setUser] = useState('');
+    const [name, setName] = useState('');
 
     const handleChange = (e) => {
         const { name, value } = e.currentTarget;
@@ -15,8 +18,8 @@ const RegisterView = () => {
                 return setEmail(value);
             case 'password':
                 return setPassword(value);
-            case 'user':
-                return setUser(value);
+            case 'name':
+                return setName(value);
             default:
                 return;
         };
@@ -24,16 +27,14 @@ const RegisterView = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(email);
-        console.log(password);
-        console.log(user);
+        dispatch(authOperations.register({ name, email, password }));
         reset();
     };
 
     const reset = () => {
         setEmail('');
         setPassword('');
-        setUser('');
+        setName('');
     };
 
 
@@ -46,9 +47,11 @@ const RegisterView = () => {
                         placeholder='John'
                         className={s.input}
                         type="text"
-                        name="user"
+                        name="name"
+                        pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
+                        title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
                         required
-                        value={user}
+                        value={name}
                         onChange={handleChange}
                     />
                 </label>
@@ -67,7 +70,8 @@ const RegisterView = () => {
                 <label className={s.label}>
                     <span className={s.labelText}>Password</span>
                     <input
-                        placeholder='--------'
+                        placeholder='Must have at least 8 characters'
+                        title="Password must contain letters and numbers"
                         className={s.input}
                         type="password"
                         name="password"
@@ -77,7 +81,7 @@ const RegisterView = () => {
                     />
                 </label>
                 <button className={s.submitButton} type="submit">
-                    Log in
+                    Register
                 </button>
             </form>
         </div>
