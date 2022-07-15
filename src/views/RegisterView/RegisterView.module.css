@@ -25,7 +25,6 @@
 .label {
     display: flex;
     flex-direction: column;
-    max-width: 400px;
     margin-bottom: 40px;
     cursor: pointer;
 }
@@ -36,8 +35,7 @@
     font-weight: 500;
     line-height: 30px;
     padding: 10px 15px;
-    min-width: 320px;
-    max-width: 600px;
+    width: 370px;
     padding: 15px 25px;
     color: #191d2b;
     border: 1px solid #191d2b;
