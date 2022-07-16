@@ -1,0 +1,36 @@
+.wrapper {
+    height: 70px;
+    display: flex;
+    align-items: center;
+}
+
+.image {
+    min-width: 32px;
+    height: 32px;
+    border-radius: 10px;
+    margin-right: 10px;
+}
+
+.text {
+    margin: 0;
+    margin-right: 10px;
+}
+
+.button {
+    cursor: pointer;
+    padding: 10px;
+    margin: 10px;
+    color: aquamarine;
+    background-color: transparent;
+    font-size: 26px;
+    transition: all 0.5s ease-in-out;
+    border: 1px solid aquamarine;
+    border-radius: 7px;
+}
+
+.button:hover {
+    border-radius: 7px;
+    font-size: 36px;
+    color: rebeccapurple;
+    border: 1px solid rebeccapurple;
+}
