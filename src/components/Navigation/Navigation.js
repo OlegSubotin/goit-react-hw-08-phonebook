@@ -7,9 +7,6 @@ const Navigation = () => {
             <NavLink to="/" className={({ isActive }) => (isActive ? s.active : s.inactive)} >
                 Home
             </NavLink>
-            <NavLink to="/contacts" className={({ isActive }) => (isActive ? s.active : s.inactive)} >
-                Contacts
-            </NavLink>
         </nav>
     );
 };
