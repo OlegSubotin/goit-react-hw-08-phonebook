@@ -21,6 +21,7 @@ const register = createAsyncThunk('auth/register', async credentials => {
         return data;
     } catch (error) {
         Notify.failure('Something went wrong on register');
+        console.log(error);
     }
 });
 
@@ -32,6 +33,7 @@ const logIn = createAsyncThunk('auth/login', async credentials => {
         return data;
     } catch (error) {
         Notify.failure('Something went wrong on login');
+        console.log(error);
     }
 });
 
@@ -42,15 +44,17 @@ const logOut = createAsyncThunk('auth/logout', async () => {
         token.unset();
     } catch (error) {
         Notify.failure('Something went wrong on logout');
+        console.log(error);
     }
 });
 
 const fetchCurrentUser = createAsyncThunk(
-    'auth/refresh', async (_, thunkAPI) => {
+    'auth/refresh',
+    async (_, thunkAPI) => {
         const state = thunkAPI.getState();
         const persistedToken = state.auth.token;
 
-        if (token === null) {
+        if (persistedToken === null) {
             return thunkAPI.rejectWithValue();
         };
 
@@ -60,6 +64,7 @@ const fetchCurrentUser = createAsyncThunk(
             return data;
         } catch (error) {
             Notify.failure('Something went wrong on fetchCurrentUser');
+            console.log(error);
         };        
     },
 );
