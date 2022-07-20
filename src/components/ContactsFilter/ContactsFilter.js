@@ -1,13 +1,12 @@
-import { useDispatch, useSelector } from "react-redux";
-import { changeFilter } from "redux/contacts/contacts-actions";
+import { useDispatch } from "react-redux";
+import { filteredContact } from 'redux/contacts/contacts-slice';
 import s from './ContactsFilter.module.css';
 
 const ContactsFilter = () => {
-    const value = useSelector(state => state.filter);
     const dispatch = useDispatch();
 
     const onFilterInputChange = e => {
-        dispatch(changeFilter(e.currentTarget.value));
+        dispatch(filteredContact(e.currentTarget.value));
     };
 
     return (
@@ -20,7 +19,6 @@ const ContactsFilter = () => {
                     className={s.input}
                     type='text'
                     name='filter'
-                    value={value}
                     placeholder='Viktor'
                     onChange={onFilterInputChange()}
                 />

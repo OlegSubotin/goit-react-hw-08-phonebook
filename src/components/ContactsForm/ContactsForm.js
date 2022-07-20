@@ -1,37 +1,43 @@
 import { useState } from 'react';
 import { Notify } from 'notiflix';
-import { ClipLoader } from 'react-spinners';
-import { useAddContactMutation, useFetchAllContactsQuery } from 'redux/contacts/contacts-slice';
+import { useDispatch, useSelector } from 'react-redux';
+import contactsSelectors from 'redux/contacts/contacts-selectors';
+import contactsOperations from 'redux/contacts/contacts-operations';
 import s from './ContactsForm.module.css';
 
 const ContactsForm = () => {
-    const [params, setParams] = useState({ name: '', phone: '' });
-    const [addContact, { isLoading }] = useAddContactMutation();
-    const { data } = useFetchAllContactsQuery();
+    const [name, setName] = useState('');
+    const [phone, setPhone] = useState('');
+    const contacts = useSelector(contactsSelectors.getContacts);
+    const dispatch = useDispatch();
 
-    const handleChange = e => {
-        const { name, value } = e.currentTarget;
-        setParams({ ...params, [name]: value });
+    const handleChangeName = e => {
+        setName(e.currentTarget.value);
+    };
+    const handleChangePhone = e => {
+        setPhone(e.currentTarget.value);
     };
 
     const handleSubmit = e => {
         e.preventDefault();
-        data.find(({ name, phone }) =>
-            params.name === name ||
-            params.phone === phone
-        )
-            ? Notify.failure(`${params.name} exists in your phonebook`)
-            : addContactOnSubmit();
-    };
-
-    const addContactOnSubmit = () => {
-        addContact(params);
-        Notify.success(`${params.name} has been added to your phonebook`);
+        const newContact = {
+            name, phone,
+        };
+        if (
+            contacts.some(contact =>
+                name === contact.name
+            )
+        ) {
+            return Notify.info(`${name} exists in your phonebook`);
+        }
+        dispatch(contactsOperations.addContact(newContact));
+        Notify.success(`${name} has been added to your phonebook`);
         reset();
     };
 
     const reset = () => {
-        setParams({ name: '', phone: '' });
+        setName('');
+        setPhone('');
     };
 
     return (
@@ -47,8 +53,8 @@ const ContactsForm = () => {
                     pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
                     title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
                     required
-                    value={params.name}
-                    onChange={handleChange}
+                    value={name}
+                    onChange={handleChangeName}
                 />
             </label>
             <label className={s.label}>
@@ -62,12 +68,12 @@ const ContactsForm = () => {
                     pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
                     title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
                     required
-                    value={params.phone}
-                    onChange={handleChange}
+                    value={phone}
+                    onChange={handleChangePhone}
                 />
             </label>
             <button className={s.button} type='submit'>
-                {isLoading ? <ClipLoader size='10px' /> : 'Add contact'}
+                Add contact
             </button>
         </form>
     );
