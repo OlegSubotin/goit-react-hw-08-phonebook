@@ -1,0 +1,12 @@
+.list {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
+}
+
+.loader {
+    color: aquamarine;
+    margin-top: 40px;
+    margin-left: 180px;
+}

@@ -1,0 +1,46 @@
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    width: auto;
+    height: 150px;
+    padding: 40px;
+    border-radius: 15px 0px 15px 15px;
+    background: rgba(0, 0, 0, 0.6);
+    margin-top: 30px;
+}
+
+.label {
+    display: flex;
+    flex-direction: column;
+    max-width: 400px;
+    margin-bottom: 40px;
+    cursor: pointer;
+}
+
+.input {
+    outline: none;
+    font-size: 26px;
+    font-weight: 500;
+    line-height: 30px;
+    padding: 10px 15px;
+    min-width: 320px;
+    max-width: 600px;
+    padding: 15px 25px;
+    color: #191d2b;
+    border: 1px solid #191d2b;
+    border-radius: 10px 0px 10px 10px;
+}
+
+.input::placeholder {
+    color: #191d2b;
+    font-size: 26px;
+    font-weight: 500;
+    line-height: 30px;
+}
+
+.labelText {
+    color: aquamarine;
+    font-size: 26px;
+    font-weight: 500;
+    padding-bottom: 10px;
+}
