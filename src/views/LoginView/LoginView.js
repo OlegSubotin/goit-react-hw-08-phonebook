@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-// import { Notify } from 'notiflix';
-// import ClipLoader from 'react-spinner/ClipLoader';
 import authOperations from 'redux/auth/auth-operations';
 import s from './LoginView.module.css';
 

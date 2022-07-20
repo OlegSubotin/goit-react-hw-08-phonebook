@@ -13,7 +13,7 @@ const token = {
     },
 };
 
-const register = createAsyncThunk('auth/register', async credentials => {
+const register = createAsyncThunk('auth/register', async (credentials, thunkAPI) => {
     try {
         const { data } = await axios.post('/users/signup', credentials);
         Notify.success("You're registered ;)");
@@ -22,10 +22,11 @@ const register = createAsyncThunk('auth/register', async credentials => {
     } catch (error) {
         Notify.failure('Something went wrong on register');
         console.log(error);
+        return thunkAPI.rejectWithValue(error);
     }
 });
 
-const logIn = createAsyncThunk('auth/login', async credentials => {
+const logIn = createAsyncThunk('auth/login', async (credentials, thunkAPI) => {
     try {
         const { data } = await axios.post('/users/login', credentials);
         Notify.success("You're logged in ;)");
@@ -34,17 +35,19 @@ const logIn = createAsyncThunk('auth/login', async credentials => {
     } catch (error) {
         Notify.failure('Something went wrong on login');
         console.log(error);
+        return thunkAPI.rejectWithValue(error);
     }
 });
 
-const logOut = createAsyncThunk('auth/logout', async () => {
+const logOut = createAsyncThunk('auth/logout', async (_, thunkAPI) => {
     try {
-        await axios.post('/users/logout');
+        await axios.post('users/logout');
         Notify.success("You're logged out. Have a good day ;)");
         token.unset();
     } catch (error) {
         Notify.failure('Something went wrong on logout');
         console.log(error);
+        return thunkAPI.rejectWithValue(error);
     }
 });
 
@@ -55,6 +58,7 @@ const fetchCurrentUser = createAsyncThunk(
         const persistedToken = state.auth.token;
 
         if (persistedToken === null) {
+            console.log('No token from fetchCurrentUser');
             return thunkAPI.rejectWithValue();
         };
 
@@ -65,6 +69,7 @@ const fetchCurrentUser = createAsyncThunk(
         } catch (error) {
             Notify.failure('Something went wrong on fetchCurrentUser');
             console.log(error);
+            return thunkAPI.rejectWithValue(error);
         };        
     },
 );

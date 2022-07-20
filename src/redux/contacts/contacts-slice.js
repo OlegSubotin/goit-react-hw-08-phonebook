@@ -1,45 +1,56 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { createSlice } from "@reduxjs/toolkit";
+import contactsOperations from "./contacts-operations";
 
-export const contactsApi = createApi({
-    reducerPath: 'contacts',
-    baseQuery: fetchBaseQuery({
-        baseUrl: 'https://connections-api.herokuapp.com',
-        prepareHeaders: (headers, { getState }) => {
-            const token = getState().auth.token;
-            if (token) {
-                headers.set('authorization', `Bearer ${token}`);
-            }
-
-            return headers;
+const contactsSlice = createSlice({
+    name: 'contacts',
+    initialState: {
+        items: [],
+        filter: '',
+        isLoading: true,
+        error: null,
+    },
+    reducers: {
+        filteredContact: (state, action) => {
+            console.log(action);
+            state.filter = action.payload;
         },
-    }),
-    tagTypes: ['Contacts'],
-    endpoints: builder => ({
-        fetchAllContacts: builder.query({
-            query: () => `/contacts`,
-            method: 'GET',
-            providesTags: ['Contacts'],
-        }),
-        addContact: builder.mutation({
-            query: ({ name, number }) => ({
-                url: '/contacts',
-                method: 'POST',
-                body: { name: name, number: number },
-            }),
-            invalidatesTags: ['Contacts'],
-        }),
-        deleteContact: builder.mutation({
-            query: id => ({
-                url: `/contacts/${id}`,
-                method: 'DELETE',
-            }),
-            invalidatesTags: ['Contacts'],
-        }),
-    }),
+    },
+    extraReducers: {
+        [contactsOperations.fetchContacts.fulfilled](state, action) {
+            state.items = action.payload;
+            state.isLoading = false;
+            state.error = null;
+        },
+        [contactsOperations.fetchContacts.pending](state, _) {
+            state.isLoading = true;
+            state.error = null;
+        },
+        [contactsOperations.addContact.fulfilled](state, _) {
+            state.isLoading = false;
+            state.error = null;
+        },
+        [contactsOperations.addContact.pending](state, _) {
+            state.isLoading = true;
+            state.error = null;
+        },
+        [contactsOperations.addContact.rejected](state, action) {
+            state.isLoading = false;
+            state.error = action.payload;
+        },
+        [contactsOperations.deleteContact.fulfilled](state, _) {
+            state.isLoading = false;
+            state.error = null;
+        },
+        [contactsOperations.deleteContact.pending](state, _) {
+            state.isLoading = true;
+            state.error = null;
+        },
+        [contactsOperations.deleteContact.rejected](state, action) {
+            state.isLoading = false;
+            state.error = action.payload;
+        },
+    },
 });
 
-export const {
-    useFetchAllContactsQuery,
-    useAddContactMutation,
-    useDeleteContactMutation,
-} = contactsApi;
+export const { filteredContact } = contactsSlice.actions;
+export const contactsSliceReducer = contactsSlice.reducer;

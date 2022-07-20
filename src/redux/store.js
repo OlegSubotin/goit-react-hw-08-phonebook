@@ -1,5 +1,4 @@
-import { configureStore, getDefaultMiddleware, } from '@reduxjs/toolkit';
-import logger from 'redux-logger';
+import { configureStore } from '@reduxjs/toolkit';
 import {
     persistStore,
     persistReducer,
@@ -11,15 +10,8 @@ import {
     REGISTER,
 } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
-// import { contactsReducer } from './contacts';
 import authReducer from './auth/auth-slice';
-
-
-const middleware = [...getDefaultMiddleware({
-    serializableCheck: {
-        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER]
-    }
-}), logger];
+import { contactsSliceReducer } from './contacts/contacts-slice';
 
 const authPersistConfig = {
     key: 'auth',
@@ -30,11 +22,14 @@ const authPersistConfig = {
 export const store = configureStore({
     reducer: {
         auth: persistReducer(authPersistConfig, authReducer),
-        // contacts: contactsReducer,
-    // [contactsApi.reducerPath]: contactsApi.reducer,
-    // [filterSlice.name]: filterSlice.reducer,
+        contacts: contactsSliceReducer,
     },
-    middleware,
+    middleware: getDefaultMiddleware =>
+        getDefaultMiddleware({
+            serializableCheck: {
+                ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+            },
+        }),    
     devTools: process.env.NODE_ENV === 'development',
 });
 
