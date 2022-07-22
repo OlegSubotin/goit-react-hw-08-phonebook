@@ -16,7 +16,7 @@ const ContactsItem = ({ id, name, phone }) => {
             <button
                 className={s.button}
                 type='button'
-                onClick={() =>removeContact(id)}
+                onClick={() => removeContact(id)}
             >
                 Delete
             </button>
