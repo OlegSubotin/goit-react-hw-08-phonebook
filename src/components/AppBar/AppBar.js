@@ -6,7 +6,7 @@ import UserMenu from "components/UserMenu";
 import s from './AppBar.module.css';
 
 function AppBar() {
-    const isLoggedIn = useSelector(authSelectors.getLoggedIn);
+    const isLoggedIn = useSelector(authSelectors.getIsLoggedIn);
 
     return (
         <nav className={s.navigation}>

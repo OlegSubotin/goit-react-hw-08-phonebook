@@ -19,7 +19,7 @@ const NotFoundView = lazy(() => import('./views/NotFoundView'));
 
 function App() {
     const dispatch = useDispatch();
-    const isFetchingCurrentUser = useSelector(authSelectors.getIsFetchingCurrentUser());
+    const isFetchingCurrentUser = useSelector(authSelectors.getIsFetchingCurrentUser);
 
     useEffect(() => {
         dispatch(authOperations.fetchCurrentUser());

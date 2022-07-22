@@ -11,7 +11,6 @@ const contactsSlice = createSlice({
     },
     reducers: {
         filteredContact: (state, action) => {
-            console.log(action);
             state.filter = action.payload;
         },
     },

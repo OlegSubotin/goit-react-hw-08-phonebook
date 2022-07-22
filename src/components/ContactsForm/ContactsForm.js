@@ -7,7 +7,7 @@ import s from './ContactsForm.module.css';
 
 const ContactsForm = () => {
     const [name, setName] = useState('');
-    const [phone, setPhone] = useState('');
+    const [number, setNumber] = useState('');
     const contacts = useSelector(contactsSelectors.getContacts);
     const dispatch = useDispatch();
 
@@ -15,17 +15,17 @@ const ContactsForm = () => {
         setName(e.currentTarget.value);
     };
     const handleChangePhone = e => {
-        setPhone(e.currentTarget.value);
+        setNumber(e.currentTarget.value);
     };
 
     const handleSubmit = e => {
         e.preventDefault();
         const newContact = {
-            name, phone,
+            name, number,
         };
         if (
             contacts.some(contact =>
-                name === contact.name
+                contact.name.toLowerCase() === name.toLowerCase()
             )
         ) {
             return Notify.info(`${name} exists in your phonebook`);
@@ -37,45 +37,47 @@ const ContactsForm = () => {
 
     const reset = () => {
         setName('');
-        setPhone('');
+        setNumber('');
     };
 
     return (
-        <form className={s.form} onSubmit={handleSubmit}>
-            <label className={s.label}>
-                <span className={s.labelText}>
-                    Name
-                </span>
-                <input
-                    className={s.input}
-                    type="text"
-                    name="name"
-                    pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
-                    title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
-                    required
-                    value={name}
-                    onChange={handleChangeName}
-                />
-            </label>
-            <label className={s.label}>
-                <span className={s.labelText}>
-                    Phone number
-                </span>
-                <input
-                    className={s.input}
-                    type="tel"
-                    name="phone"
-                    pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
-                    title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
-                    required
-                    value={phone}
-                    onChange={handleChangePhone}
-                />
-            </label>
-            <button className={s.button} type='submit'>
-                Add contact
-            </button>
-        </form>
+        <div className={s.wrapper}>
+            <form className={s.form} onSubmit={handleSubmit}>
+                <label className={s.label}>
+                    <span className={s.labelText}>
+                        Name
+                    </span>
+                    <input
+                        className={s.input}
+                        type="text"
+                        name="name"
+                        pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
+                        title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
+                        required
+                        value={name}
+                        onChange={handleChangeName}
+                    />
+                </label>
+                <label className={s.label}>
+                    <span className={s.labelText}>
+                        Phone number
+                    </span>
+                    <input
+                        className={s.input}
+                        type="tel"
+                        name="phone"
+                        pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
+                        title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
+                        required
+                        value={number}
+                        onChange={handleChangePhone}
+                    />
+                </label>
+                <button className={s.button} type='submit'>
+                    Add contact
+                </button>
+            </form>
+        </div>
     );
 };
 

@@ -34,3 +34,29 @@
     color: rebeccapurple;
     border: 1px solid rebeccapurple;
 }
+
+.active {
+    padding: 10px;
+    margin: 10px;
+    color: rebeccapurple;
+    font-size: 36px;
+    border: 1px solid rebeccapurple;
+    border-radius: 7px;
+    text-decoration: none;
+}
+
+.inactive {
+    text-decoration: none;
+    padding: 10px;
+    margin: 10px;
+    color: aquamarine;
+    font-size: 30px;
+    transition: all 0.5s ease-in-out;
+}
+
+.inactive:hover {
+    border-radius: 7px;
+    font-size: 36px;
+    color: rebeccapurple;
+    border: 1px solid rebeccapurple;
+}

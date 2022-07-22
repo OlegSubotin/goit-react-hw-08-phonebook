@@ -3,22 +3,26 @@ import contactsOperations from 'redux/contacts/contacts-operations';
 import s from './ContactsItem.module.css';
 
 const ContactsItem = ({ id, name, phone }) => {
-    const dispatch = useDispatch;
+    const dispatch = useDispatch();
+
+    const removeContact = (id) => {
+        dispatch(contactsOperations.deleteContact(id));
+    };
 
     return (
         <li className={s.item}>
-            <p className={s.text}>{name}</p>
+            <p className={s.text}><b>{name}</b>:</p>
             <p className={s.text}>{phone}</p>
             <button
                 className={s.button}
                 type='button'
-                onClick={() => dispatch(contactsOperations.deleteContact(id))}
+                onClick={() =>removeContact(id)}
             >
+                Delete
             </button>
         </li>
     );
 };
-
 export default ContactsItem;
 
 

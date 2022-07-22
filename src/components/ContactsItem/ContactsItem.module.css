@@ -3,6 +3,7 @@
     padding: 10px 0;
     display: flex;
     justify-content: space-between;
+    align-items: center;
 }
 
 .button {
@@ -15,11 +16,16 @@
     margin: 8px 0;
     cursor: pointer;
     font-size: 24px;
-    transition: all 0.5s ease-in-out;
+    transition: all 0.3s ease-in-out;
 }
 
 .button:hover {
     color: rebeccapurple;
     border: 1px solid rebeccapurple;
+}
+
+.text {
     font-size: 28px;
+    color: aquamarine;
+    margin: 10px;
 }

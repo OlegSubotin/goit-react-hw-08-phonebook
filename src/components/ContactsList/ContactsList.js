@@ -25,17 +25,19 @@ const ContactsList = () => {
     const filteredContactList = filteredContacts();
 
     return (
+        <div className={s.wrapper}>
         <ul className={s.list}>
-            {contacts && filteredContactList.map(({ id, name, phone }) => (
+            {contacts && filteredContactList.map(({ id, name, number }) => (
                 <ContactsItem
                     key={id}
                     id={id}
                     name={name}
-                    phone={phone}
+                    phone={number}
                 />
             ))}
 
-        </ul>
+            </ul>
+            </div>
     );
 };
 

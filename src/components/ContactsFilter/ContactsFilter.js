@@ -10,19 +10,21 @@ const ContactsFilter = () => {
     };
 
     return (
-        <div className={s.wrapper}>
-            <label>
-                <span className={s.labelText}>
-                    Find contact using name or phone number
-                </span>
-                <input
-                    className={s.input}
-                    type='text'
-                    name='filter'
-                    placeholder='Viktor'
-                    onChange={onFilterInputChange()}
-                />
-            </label>
+        <div className={s.section}>
+            <div className={s.wrapper}>
+                <label className={s.label}>
+                    <span className={s.labelText}>
+                        Find contact using name
+                    </span>
+                    <input
+                        className={s.input}
+                        type='text'
+                        name='filter'
+                        placeholder='Viktor'
+                        onChange={onFilterInputChange}
+                    />
+                </label>
+            </div>
         </div>
     );
 };
